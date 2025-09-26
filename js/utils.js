@@ -60,15 +60,15 @@ function renderBoard(board) {
 
             strHTML += `\t<td class="cell ${cellClass}" onclick='onCellClicked(this, ${i}, ${j})'><span class="hide">`
 
-            if (currCell.isMine) {
-                strHTML += MINE_IMG
-            } else {
-                if (currCell.minesAroundCount > 0) {
-                    strHTML += currCell.minesAroundCount
-                } else {
-                    strHTML += ''
-                }
-            }
+            // if (currCell.isMine) {
+            //     strHTML += MINE_IMG
+            // } else {
+            //     if (currCell.minesAroundCount > 0) {
+            //         strHTML += currCell.minesAroundCount
+            //     } else {
+            //         strHTML += ''
+            //     }
+            // }
             strHTML += '</span></td>\n'
         }
         strHTML += '</tr>\n'
@@ -76,19 +76,30 @@ function renderBoard(board) {
     elBoard.innerHTML = strHTML
 }
 
+function renderMines(board) {
+    for (var i = 0; i < board.length; i++) {
+        for (var j = 0; j < board[i].length; j++) {
+            const currCell = board[i][j]
+            const elSpan = document.querySelector(`.cell-${i}-${j} span`)
+
+            if (currCell.isMine) {
+                elSpan.innerHTML = MINE_IMG
+            } else {
+                if (currCell.minesAroundCount > 0) {
+                    elSpan.innerHTML = currCell.minesAroundCount
+                } else {
+                    elSpan.innerHTML += ''
+                }
+            }
+        }
+    }
+}
+
 function getClassName(position) {
     return `cell-${position.i}-${position.j}`
 }
 
-function onCellClicked(elCell, i, j) {
-    const cell = gBoard[i][j]
-    if(cell.isRevealed) return
 
-    cell.isRevealed = true
-
-    var elSpan = elCell.querySelector('span')
-    elSpan.classList.remove('hide')
-}
 
 // function onCellMarked(elCell, i, j) {
 

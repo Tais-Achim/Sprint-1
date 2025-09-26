@@ -79,3 +79,7 @@ footer {
   color: white;
   text-align: center;
 }
+
+.cell-reveal {
+    background-color: rgb(12, 184, 155);
+}

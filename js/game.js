@@ -12,13 +12,20 @@ const gLevel = {
     MINES: 2
 }
 var gBoard
-var gMinesOnBoard
+var gRevealedCells
+var gCellsOnBoard
+var gCellsOnBoard
+var gFirstClick
+var gFirstClickRow
+var gFirstClickCol
 
 function init() {
 
     gBoard = buildBoard()
-    updateMinesAroundCount()
     renderBoard(gBoard)
+
+    gFirstClick = true
+    gRevealedCells = 0
 
     hideElement('.gameover')
     hideElement('.victory')
@@ -70,6 +77,8 @@ function init() {
 
 function buildBoard() {
     const board = createMat(gLevel.SIZE)
+    gCellsOnBoard = board.length * board.length
+    console.log(gCellsOnBoard)
     // const size = gLevel.SIZE
 
     for (var i = 0; i < board.length; i++) {
@@ -84,19 +93,52 @@ function buildBoard() {
 
         }
     }
-    var minePlacement = 0
-
-    while (gLevel.MINES > minePlacement) {
-        const randRow = getRandomIntInclusive(0, board.length - 1)
-        const randCol = getRandomIntInclusive(0, board[0].length - 1)
-        const mineLocation = board[randRow][randCol]
-        mineLocation.isMine = true
-        minePlacement++
-    }
+    // gMinesOnBoard = 0
     // board[0][0].isMine = board[1][1].isMine = true
+    // gMinesOnBoard += 2
     return board
+
 }
 
+function onCellClicked(elCell, i, j) {
+    if (!gGame.isOn) return
+    const cell = gBoard[i][j]
+    if (cell.isRevealed) return
+
+
+    if (gFirstClick) {
+        gFirstClickRow = i
+        gFirstClickCol = j
+        placeMines(gBoard)
+        updateMinesAroundCount()
+        gFirstClick = false
+        renderMines(gBoard)
+    }
+
+    if (cell.isMine) {
+        gameOver()
+        var elSpan = elCell.querySelector('span')
+        elSpan.classList.remove('hide')
+        elCell.style.backgroundColor = 'black'
+        return
+    }
+
+
+
+    cell.isRevealed = true
+    gRevealedCells++
+
+    // console.log(gCellsOnBoard)
+    // console.log(gMinesOnBoard)
+
+    if (gRevealedCells === gCellsOnBoard - gMinesOnBoard) victory()
+    // console.log(gRevealedCells)
+
+
+    var elSpan = elCell.querySelector('span')
+    elSpan.classList.remove('hide')
+    elCell.classList.add('cell-reveal')
+}
 
 // function updateScore(diff) {
 //     // Model
@@ -110,15 +152,11 @@ function buildBoard() {
 
 function gameOver() {
     gGame.isOn = false
-    clearInterval(gGhostsInterval)
-    gGhosts = []
     showElement('.gameover')
 }
 
 function victory() {
     gGame.isOn = false
-    clearInterval(gGhostsInterval)
-    gGhosts = []
     showElement('.victory')
 }
 
@@ -131,6 +169,5 @@ function showElement(selector) {
     const el = document.querySelector(selector)
     el.classList.remove('hide')
 }
-
 
 
