@@ -18,6 +18,9 @@ var gCellsOnBoard
 var gFirstClick
 var gFirstClickRow
 var gFirstClickCol
+var gLifeCount
+
+const FLAG_IMG = '<img src="img/pirate-flag.png">'
 
 function init() {
 
@@ -26,54 +29,13 @@ function init() {
 
     gFirstClick = true
     gRevealedCells = 0
+    gLifeCount = 3
 
     hideElement('.gameover')
     hideElement('.victory')
 
     gGame.isOn = true
 }
-
-
-// gGame = {
-//     isOn: false,
-//     revealedCount: 0,
-//     markedCount: 0,
-//     secsPassed: 0
-// }
-
-// onInit() Called when page loads
-// buildBoard() Builds the board
-// Set some mines
-// Call setMinesNegsCount()
-// Return the created board
-// setMinesNegsCount(board) Count mines around each cell
-// and set the cell's
-// minesAroundCount.
-// renderBoard(board) Render the board as a <table>
-// to the page
-// onCellClicked(elCell, i, j) Called when a cell is clicked
-// onCellMarked(elCell, i, j) Called when a cell is rightclicked
-// See how you can hide the context
-// menu on right click
-
-// checkGameOver() The game ends when all mines
-// are marked, and all the other
-// cells are revealed
-// expandReveal(board, elCell,
-// i, j)
-// When the user clicks a cell with
-// no mines around, reveal not
-// only that cell, but also its
-// neighbors.
-// NOTE: start with a basic
-// implementation that only
-// reveals the non-mine 1st degree
-// neighbors
-// BONUS: Do it like the real
-// algorithm (see description at
-// the Bonuses section below)
-
-
 
 function buildBoard() {
     const board = createMat(gLevel.SIZE)
@@ -103,7 +65,7 @@ function buildBoard() {
 function onCellClicked(elCell, i, j) {
     if (!gGame.isOn) return
     const cell = gBoard[i][j]
-    if (cell.isRevealed) return
+    if (cell.isRevealed || cell.isMarked) return
 
 
     if (gFirstClick) {
@@ -117,8 +79,8 @@ function onCellClicked(elCell, i, j) {
 
     if (cell.isMine) {
         gameOver()
-        var elSpan = elCell.querySelector('span')
-        elSpan.classList.remove('hide')
+        var elData = elCell.querySelector('.data.hide')
+        elData.classList.remove('hide')
         elCell.style.backgroundColor = 'black'
         return
     }
@@ -128,6 +90,7 @@ function onCellClicked(elCell, i, j) {
     cell.isRevealed = true
     gRevealedCells++
 
+    expandReveal(gBoard, elCell, i, j)
     // console.log(gCellsOnBoard)
     // console.log(gMinesOnBoard)
 
@@ -135,8 +98,8 @@ function onCellClicked(elCell, i, j) {
     // console.log(gRevealedCells)
 
 
-    var elSpan = elCell.querySelector('span')
-    elSpan.classList.remove('hide')
+    var elData = elCell.querySelector('.data.hide')
+    elData.classList.remove('hide')
     elCell.classList.add('cell-reveal')
 }
 
@@ -149,6 +112,41 @@ function onCellClicked(elCell, i, j) {
 //     elScore.innerText = gGame.score
 
 // }
+
+function expandReveal(board, elCell, i, j) {
+    const cell = board[i][j]
+    const negArr = []
+    if (elCell.innerHTML === '') {
+        for (var x = i - 1; x <= i + 1; x++) {
+
+            if (x < 0 || x >= board.length) continue
+
+            for (var y = j - 1; y <= j + 1; y++) {
+
+                if (x === i && y === j) continue
+                if (y < 0 || y >= board[i].length) continue
+
+                board[]
+            }
+        }
+    }
+}
+
+function onCellMarked(elCell, i, j) {
+    if (!gGame.isOn) return false
+    const cell = gBoard[i][j]
+    if (cell.isRevealed) return false
+
+    cell.isMarked = !cell.isMarked
+
+    const elMark = elCell.querySelector('.mark')
+    if (cell.isMarked) {
+        elMark.innerHTML = FLAG_IMG
+    } else {
+        elMark.innerHTML = ''
+    }
+    return false
+}
 
 function gameOver() {
     gGame.isOn = false
@@ -170,4 +168,12 @@ function showElement(selector) {
     el.classList.remove('hide')
 }
 
+function lifeDown() {
+    if (gLifeCount > 0) {
+        gLifeCount--
 
+        // DOMException
+    } else {
+        gameOver
+    }
+}

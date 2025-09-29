@@ -1,26 +1,26 @@
 h1 {
-  padding: 1;
-  margin: 1;
-  font-size: 50px;
-  color: #3705c0;
+    padding: 1;
+    margin: 1;
+    font-size: 50px;
+    color: #3705c0;
 }
 
 body {
     background-color: rgb(24, 5, 54);
-	text-align: center;
-	color: lightgray;
+    text-align: center;
+    color: lightgray;
     font-family: Arial, Helvetica, sans-serif;
 }
 
 table {
-	margin: 100px auto;
-	border: 1px solid lightgray;
+    margin: 100px auto;
+    border: 1px solid lightgray;
 }
 
 .cell {
-	width: 40px;
-	height: 40px;
-	font-size: 1.5em;
+    width: 40px;
+    height: 40px;
+    font-size: 1.5em;
 }
 
 .gameover {
@@ -71,13 +71,14 @@ img {
     height: auto;
 }
 
+
 footer {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  color: white;
-  text-align: center;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    color: white;
+    text-align: center;
 }
 
 .cell-reveal {
