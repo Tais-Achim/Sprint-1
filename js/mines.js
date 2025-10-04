@@ -1,16 +1,11 @@
 'use strict'
 
 const MINE_IMG = '<img src="img/mine1.png">'
-// const MINE_IMG = '💣'
 var gMinesOnBoard
-
-var elMineCount = document.querySelector('.minecount span')
-elMineCount.innerText = gLevel.MINES
-
+var gMineClickTimeout
 
 function setMinesNegsCount(rowIdx, colIdx) {
     var count = 0
-
 
     for (var i = rowIdx - 1; i <= rowIdx + 1; i++) {
 
@@ -35,10 +30,10 @@ function updateMinesAroundCount() {
     }
 }
 
-function placeMines(board) {
+function placeMines(board, mineCount) {
     gMinesOnBoard = 0
 
-    while (gLevel.MINES > gMinesOnBoard) {
+    while (mineCount > gMinesOnBoard) {
 
         var randRow = getRandomIntInclusive(0, board.length - 1)
         var randCol = getRandomIntInclusive(0, board[0].length - 1)
@@ -46,6 +41,7 @@ function placeMines(board) {
         if (gFirstClickRow === randRow && gFirstClickCol === randCol) continue
 
         var mineLocation = board[randRow][randCol]
+        if (mineLocation.isMine) continue
         mineLocation.isMine = true
         gMinesOnBoard++
     }
@@ -71,28 +67,20 @@ function renderMines(board) {
     }
 }
 
+function setMinesNegsCount(rowIdx, colIdx) {
+    var count = 0
 
-// function addBalls() {
+    for (var i = rowIdx - 1; i <= rowIdx + 1; i++) {
 
-//     var randPos = checkEmptyCells()
+        if (i < 0 || i >= gBoard.length) continue
 
-//     gBoard[randPos.i][randPos.j].gameElement = BALL
-//     renderCell(randPos, BALL_IMG)
-//     updateNeighborCount()
-// }
+        for (var j = colIdx - 1; j <= colIdx + 1; j++) {
 
+            if (i === rowIdx && j === colIdx) continue
+            if (j < 0 || j >= gBoard[i].length) continue
 
-// function countNeighbors(rowIdx, colIdx, mat) {
-//     var neighborsCount = 0
-
-//     for (var i = rowIdx - 1; i <= rowIdx + 1; i++) {
-//         if (i < 0 || i >= mat.length) continue
-
-//         for (var j = colIdx - 1; j <= colIdx + 1; j++) {
-//             if (i === rowIdx && j === colIdx) continue
-//             if (j < 0 || j >= mat[i].length) continue
-//             if (mat[i][j] === LIFE) neighborsCount++
-//         }
-//     }
-//     return neighborsCount
-// }
+            if (gBoard[i][j].isMine) count++
+        }
+    }
+    return count
+}

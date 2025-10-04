@@ -9,23 +9,37 @@
     <link rel="stylesheet" href="css/app.css">
 </head>
 
-<body onload="init()">
+<body onload="init(gLevel1.SIZE, gLevel1.MINES)">
 
     <h1>Minesweeper</h1>
 
-    <h2 class="minecount">Mine count: <span></span> </h2>
-    <div class="gameover hide">
-        <h4>GAME OVER</h4>
-        <button onclick="init()">Play again</button>
-    </div>
-    <div class="victory hide">
-        <h4>VICTORY!</h4>
-        <button onclick="init()">Play again</button>
-    </div>
+    <h2 class="minecount">Mine count: <span></span></h2>
+    <h2 class="lives">Lives: <span></span></h2>
+
+    <div class="button-box"><span></span></div>
+
+    <h4 class="difficulty">Difficulty: <span></span></h4>
+    <h4 class="score">Score: <span></span></h4>
+
+    <button class="difficulty easy" onclick="init(gLevel1.SIZE, gLevel1.MINES)">Beginner</button>
+    <button class="difficulty mid" onclick="init(gLevel2.SIZE, gLevel2.MINES)">Intermediate</button>
+    <button class="difficulty hard" onclick="init(gLevel3.SIZE, gLevel3.MINES)">Expert</button>
 
     <table>
         <tbody class="board-container"></tbody>
     </table>
+
+    <div class="mine-click hide">
+        <h4>Careful, that's a mine!</h4>
+    </div>
+    <div class="gameover hide">
+        <h4>GAME OVER</h4>
+        <button onclick="init(gLevel1.SIZE, gLevel1.MINES)">Play again</button>
+    </div>
+    <div class="victory hide">
+        <h4>Yaaaay, you win...</h4>
+        <button onclick="init(gLevel1.SIZE, gLevel1.MINES)">Play again</button>
+    </div>
 
     <script src="js/utils.js"></script>
     <script src="js/game.js"></script>

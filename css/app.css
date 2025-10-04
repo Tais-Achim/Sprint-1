@@ -1,15 +1,17 @@
 h1 {
     padding: 1;
-    margin: 1;
-    font-size: 50px;
-    color: #3705c0;
+    margin: 8px 0;
+    padding: 0;
+    font-size: 70px;
+    color: #4b42d6;
+    font-family: fantasy;
 }
 
 body {
     background-color: rgb(24, 5, 54);
     text-align: center;
     color: lightgray;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Aharoni;
 }
 
 table {
@@ -30,15 +32,16 @@ table {
     padding-bottom: 30px;
     color: rgb(96, 66, 202);
     font-size: 30px;
+    min-height: 40px;
 }
 
 .victory {
-    width: 200px;
     width: 200px;
     margin: auto;
     padding-bottom: 30px;
     color: rgb(214, 143, 231);
     font-size: 30px;
+    min-height: 40px;
 }
 
 .hide {
@@ -52,7 +55,7 @@ table {
 }
 
 table {
-    margin: 100px auto;
+    margin: 24px auto;
 }
 
 table td {
@@ -79,8 +82,24 @@ footer {
     width: 100%;
     color: white;
     text-align: center;
+    font-family: 'Courier New', Courier, monospace;
 }
 
 .cell-reveal {
     background-color: rgb(12, 184, 155);
+}
+
+.mine-click {
+    width: 300px;
+    margin: auto;
+    padding-bottom: 10px;
+    color: rgb(221, 37, 98);
+    font-size: 20px;
+    min-height: 40px;
+}
+
+.smiley {
+    border-radius: 80%;
+    font-size: 60px;
+    background-color: rgb(24, 5, 54);
 }
